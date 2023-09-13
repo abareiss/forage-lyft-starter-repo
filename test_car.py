@@ -7,8 +7,9 @@ from battery.spindler_battery import SpindlerBattery
 from engine.capulet_engine import CapuletEngine
 from engine.sternman_engine import SternmanEngine
 from engine.willoughby_engine import WilloughbyEngine
-
-class TestBattery(unittest.TestCase):
+from tire.carrigan_tire import CarriganTire
+from tire.octoprime_tire import OctoprimeTire
+class Tests(unittest.TestCase):
     def test_unservicable_nubbin_battery(self):
         # doesn't need service
         today = datetime.today().date()
@@ -33,7 +34,7 @@ class TestBattery(unittest.TestCase):
     def test_servicable_spindler_battery(self):
         # needs service
         today = datetime.today().date()
-        last_service_date = today.replace(year=today.year - 3)
+        last_service_date = today.replace(year=today.year - 4)
         self.nubbin_battery = SpindlerBattery(last_service_date, datetime.today().date())
         self.assertTrue(self.nubbin_battery.needs_service(), "Should be True")
 
@@ -66,6 +67,23 @@ class TestBattery(unittest.TestCase):
         #need service
         willoughby_engine = WilloughbyEngine(100000, 20000)
         self.assertTrue(willoughby_engine.needs_service(), "Should be True")
+
+    def test_unserviceable_carrigan_tires(self):
+        carrigan_tire = CarriganTire([0, 0, 0, 0])
+        self.assertFalse(carrigan_tire.needs_service(), "Should be False")
+    
+    def test_serviceable_carrigan_tires(self):
+
+        carrigan_tire = CarriganTire([0, 0, 0.9, 0])
+        self.assertTrue(carrigan_tire.needs_service(), "Should be True")
+
+    def test_unserviceable_octoprime_tires(self):
+        octoprime_tire = OctoprimeTire([0, 0, 0, 0])
+        self.assertFalse(octoprime_tire.needs_service(), "Should be False")
+
+    def test_serviceable_octoprime_tires(self):
+        octoprime_tire = OctoprimeTire([1, 1, 1, 0])
+        self.assertTrue(octoprime_tire.needs_service(), "Should be True")
 
 if __name__ == '__main__':
     unittest.main()
