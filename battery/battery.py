@@ -1,9 +1,5 @@
-from battery.spindler_battery import SpindlerBattery
-from battery.nubbin_battery import NubbinBattery
+from abc import ABC
 
-class Battery():
-    def __init__(self, battery_type):
-        self.battery_type = battery_type
-
+class Battery(ABC):
     def needs_service(self):
-        return self.battery_type.needs_service()
+        pass

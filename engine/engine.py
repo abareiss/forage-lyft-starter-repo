@@ -1,10 +1,5 @@
-from engine.capulet_engine import CapuletEngine
-from engine.sternman_engine import SternmanEngine
-from engine.willoughby_engine import WilloughbyEngine
+from abc import ABC
 
-class Engine():
-    def __init__(self, engine_type):
-        self.engine_type = engine_type
-        
+class Engine(ABC)):   
     def needs_service(self):
-        return self.engine_type.needs_service()
+        pass
